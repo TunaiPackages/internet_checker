@@ -31,7 +31,7 @@ class InternetChecker {
       _connectivityResults = event;
       _internetStatusController.add(internetStatus);
       if (debugPrint) {
-        print('--> Internet Status Changed : $internetStatus');
+        print('--> Internet Status Changed : $internetStatus  ');
       }
     });
     _connectivityResults = await _connectivity.checkConnectivity();
