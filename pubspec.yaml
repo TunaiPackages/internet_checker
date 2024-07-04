@@ -1,7 +1,7 @@
 name: internet_checker
 description: "A new Flutter package project."
 version: 0.0.1
-homepage: "https://example.com"
+homepage: "https://github.com/TunaiPackages/internet_checker.git"
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
