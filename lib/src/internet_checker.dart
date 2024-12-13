@@ -34,7 +34,7 @@ class InternetChecker {
 
   Future<void> _init() async {
     if (_connectivitySubs != null) {
-      print('InternetChecker already initialized');
+      // print('InternetChecker already initialized');
       return;
     }
     _connectivitySubs = _connectivity.onConnectivityChanged.listen((event) {
