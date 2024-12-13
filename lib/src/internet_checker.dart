@@ -14,9 +14,11 @@ class InternetChecker {
   }
 
   bool debugPrint = false;
+
   List<ConnectivityResult> _connectivityResults = [];
   final Connectivity _connectivity = Connectivity();
-  late final StreamSubscription<List<ConnectivityResult>> _connectivitySubs;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubs;
+
   InternetStatus get internetStatus =>
       _checkInternetStatus(_connectivityResults);
   final StreamController<InternetStatus> _internetStatusController =
@@ -26,16 +28,24 @@ class InternetChecker {
 
   bool get hasInternet => internetStatus != InternetStatus.disconnected;
 
+  void updateInternetStatus() {
+    _internetStatusController.add(internetStatus);
+  }
+
   Future<void> _init() async {
+    if (_connectivitySubs != null) {
+      print('InternetChecker already initialized');
+      return;
+    }
     _connectivitySubs = _connectivity.onConnectivityChanged.listen((event) {
       _connectivityResults = event;
-      _internetStatusController.add(internetStatus);
+      updateInternetStatus();
       if (debugPrint) {
         print('--> Internet Status Changed : $internetStatus  ');
       }
     });
     _connectivityResults = await _connectivity.checkConnectivity();
-    _internetStatusController.add(internetStatus);
+    updateInternetStatus();
     if (debugPrint) {
       print('--> Internet Status : $internetStatus');
     }
